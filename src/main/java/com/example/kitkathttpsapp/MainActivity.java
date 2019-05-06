@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                doSSLRequest("https://slashdot.org/");
+                String result = doSSLRequest("https://slashdot.org");
+                Log.d("RESULT", result);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -118,23 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-
-
-            // Setup a custom SSL Factory object which simply ignore the certificates validation and accept all type of self signed certificates
-       //     SSLSocketFactory sslFactory = new SimpleSSLSocketFactory(null);
-         //   sslFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
-            // Enable HTTP parameters
+             // Enable HTTP parameters
             HttpParams params = new BasicHttpParams();
-            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-            HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-
-            /*
-            // Register the HTTP and HTTPS Protocols. For HTTPS, register our custom SSL Factory object.
-            SchemeRegistry registry = new SchemeRegistry();
-            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-            registry.register(new Scheme("https", sslFactory, 443));
-            */
+            //HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+            //HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
             SchemeRegistry registry = new SchemeRegistry();
             registry.register(new Scheme("https", new TlsSniSocketFactory(), 443));
